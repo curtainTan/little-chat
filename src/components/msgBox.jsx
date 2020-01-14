@@ -15,9 +15,13 @@ const AMsg = memo(({ data, name }) => {
                     <div className="time">{ data.time }</div>
                 </div>
                 <div className="msg-content">
-                    <pre>
-                    { data.content }
-                    </pre>
+                    {
+                        data.type === "img" ? <img className="msg-img" src={ data.content } alt="图片" /> : (
+                            <pre>
+                                { data.content }
+                            </pre>
+                        )
+                    }
                 </div>
             </div>
         </div>
@@ -37,9 +41,6 @@ function MsgBox({ selected, roomData, userData }){
 
     const box = useRef()
     useEffect( ()=> {
-        console.log( box.current )
-        console.log( box.current.scrollTop )
-        console.log( box.current.scrollHeight )
         box.current.scrollTop = box.current.scrollHeight
     }, [ selected ] )
 

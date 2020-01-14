@@ -77,7 +77,7 @@ export default {
           if( newData.joined[i].id === action.data.id ){
             newData.joined[i].msg.push( action.data.msg )
             // 添加未读消息count数量
-            if( state.selected.joined && state.selected.index === i ){
+            if( state.selected.joined && state.selected.index == i ){
             } else {
               newData.joined[i].msgCount ++
             }
