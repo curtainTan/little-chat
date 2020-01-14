@@ -37,9 +37,8 @@ function MyFooter( data ){
     }, [ setValue ] )
 
     const send = useCallback(
-        () => {
+        ( e ) => {
             if( inputValue !== "" ){
-                console.log( "input的值：", inputValue )
                 var time = new Date().toTimeString()
                 time = time.replace( /(.*)?\sGMT(.*)/, function( a, b ){
                     return b
@@ -76,7 +75,7 @@ function MyFooter( data ){
                             <Icon type="smile" style={{ fontSize: '20px' }} />
                         </div>
                     </Popover>
-                    <Input.TextArea autoSize={{ minRows: 1, maxRows: 3 }} onChange={ handleInput } value={ inputValue } />
+                    <Input.TextArea autoSize={{ minRows: 1, maxRows: 3, autoSize: true }} onPressEnter={ send } onChange={ handleInput } value={ inputValue } />
                     <Button onClick={ send } >发送</Button>
                 </Layout.Footer>
                 )  : null

@@ -30,6 +30,10 @@
     justify-content: center;
 }
 
+.msg-main-box{
+    height: 100%;
+    overflow: auto;
+}
 
 
 .my-sider{
@@ -57,8 +61,11 @@
     padding: 8px 10px;
     border-radius: 4px;
     margin: 4px 15px;
-    max-width: 200px;
     border: 1px solid rgb(100, 194, 231);
+}
+
+.msg-right{
+    max-width: 60%;
 }
 
 .msg-item {
@@ -76,6 +83,11 @@
 .is-me .msg-content{
     background-color: rgba(37, 175, 122, 0.267);
     border: 1px solid rgb(37, 175, 122);
+}
+
+pre{
+    margin: 0px;
+    white-space: pre-wrap;
 }
 
 .msg-right > .info{
@@ -116,11 +128,11 @@
     align-items: center;
 }
 
-pre{
-    margin: 0px;
-}
 
 /* 系统消息 */
+.msg-system{
+    margin: 15px 0px;
+}
 .msg-system-time{
     text-align: center;
     font-size: 12px;

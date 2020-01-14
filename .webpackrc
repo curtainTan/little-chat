@@ -6,5 +6,12 @@
     "entry": "src/index.js",
     "es5ImcompatibleVersions": true,
     "disableDynamicImport": true,
-    "publicPath": "/"
+    "hash": true,
+    "html": {
+        "template": "./src/index.ejs"
+    },
+    "externals": {
+        "React": "window.React",
+        "antd": "antd"
+    }
 }

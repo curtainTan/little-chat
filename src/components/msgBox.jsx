@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react"
+import React, { memo, useCallback, useEffect, useRef } from "react"
 import { Layout, Button, Avatar, notification } from "antd"
 import { connect } from "dva"
 
@@ -35,6 +35,14 @@ const MsgSystem = memo( ({ data }) => {
 
 function MsgBox({ selected, roomData, userData }){
 
+    const box = useRef()
+    useEffect( ()=> {
+        console.log( box.current )
+        console.log( box.current.scrollTop )
+        console.log( box.current.scrollHeight )
+        box.current.scrollTop = box.current.scrollHeight
+    }, [ selected ] )
+
     const addRoom = useCallback(() => {
         let newroomData = {
             name: roomData.name,
@@ -58,7 +66,8 @@ function MsgBox({ selected, roomData, userData }){
     }, [selected])
 
     return (
-        <Layout.Content>
+        <Layout.Content >
+            <div className="msg-main-box" ref={ box } >
             {
                 selected.joined ? 
                 (
@@ -76,6 +85,7 @@ function MsgBox({ selected, roomData, userData }){
                     <div className="no-joined-box">你还没有加入群聊...<Button type="primary" onClick={ addRoom } >申请加入群聊</Button></div>
                 )
             }
+            </div>
         </Layout.Content>
     )
 }
