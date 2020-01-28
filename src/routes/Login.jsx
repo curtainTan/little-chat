@@ -16,7 +16,7 @@ const imgList = [
     "https://image.gslb.dawnlab.me/4d6eefc256ed300338cdd97f8f3415c8.jpg",
 ]
 
-const HeaderList = memo(({ setHeader }) => {
+const Headerlist = memo(({ setHeader }) => {
     return (
         <Row gutter={[ 12, 12 ]} >
             { imgList.map( (item, index) => (
@@ -29,7 +29,7 @@ const HeaderList = memo(({ setHeader }) => {
 })
 
 
-function LoginPage({ dispatch, history, isLoading }){
+function Loginpage({ dispatch, history, isLoading }){
 
     const [ name, setName ] = useState("")
     const [ header, setHeader ] = useState( imgList[0] )
@@ -62,7 +62,7 @@ function LoginPage({ dispatch, history, isLoading }){
                         title="选择你的头像"
                         trigger="hover"
                         content={
-                            <HeaderList setHeader={ setHeader } />
+                            <Headerlist setHeader={ setHeader } />
                         }
                     >
                         <Avatar 
@@ -100,4 +100,4 @@ function mapDispatch( dispatch ){
 }
 
 
-export default connect( mapState, mapDispatch )( withRouter( LoginPage ))
+export default connect( mapState, mapDispatch )( withRouter( Loginpage ))

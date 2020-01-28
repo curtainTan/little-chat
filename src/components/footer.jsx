@@ -1,33 +1,24 @@
-import React, { useState, useCallback, useRef } from "react"
+import React, { useState, useCallback, useRef, useEffect } from "react"
 import { Layout, Input, Button, Popover, notification, Icon } from "antd"
 import { connect } from "dva"
-import "emoji-mart/css/emoji-mart.css"
 
-import { Picker } from "emoji-mart"
+import Loadable from "react-loadable"
 
-const i18n = {
-    search: '搜索表情',
-    categories: { 
-        search: '最近搜索', 
-        recent: '最近使用',
-        people: '表情',
-        nature: '自然',
-        foods: '食物',
-        activity: '活动',
-        places: '地点',
-        objects: '对象',
-        symbols: '标志',
-        flags: 'Flags',
-        custom: 'Custom'
-    },
-    categorieslabel: 'Emoji类别'
-}
+const EmojiPick = Loadable({
+    loader: () => import("./emoji"),
+    loading: <div>加载中...</div>
+})
 
 
 function MyFooter( data ){
 
     const inputImg = useRef()
     const [ inputValue, setValue ] = useState("")
+
+    useEffect(()=>{
+        EmojiPick.preload()
+    }, [])
+
 
     const handleInput = useCallback( ( e ) => {
         setValue( e.target.value )
@@ -104,12 +95,7 @@ function MyFooter( data ){
                         <input type="file" onChange={ pickHandle } ref={ inputImg } style={{ display: "none" }} accept="image/*" />
                     </div>
                     <Popover trigger="click"
-                    content={(
-                        <Picker set='emojione' 
-                            i18n={ i18n }
-                            onSelect={ ( e, p ) => { getEmoji( e, p ) } }
-                            title="选择你的表情" include={[ "people", "foods", "nature" ]} native={ true } />
-                    )} >
+                    content={ <EmojiPick getEmoji={ getEmoji } /> } >
                         <div className="emoji">
                             <Icon type="smile" style={{ fontSize: '20px' }} />
                         </div>

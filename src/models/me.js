@@ -13,7 +13,7 @@ export default {
       header: "",
       io: null
     },
-  
+
     subscriptions: {
       setup({ dispatch, history }) {  // eslint-disable-line
         history.listen( (data) => {
@@ -35,6 +35,7 @@ export default {
         // payload 中一定有 history
       *initialData( payload , { call, put } ){
         var socket = yield io("ws://132.232.45.108:7788")
+        // var socket = yield io("ws://127.0.0.1:7788")
         console.log( payload )
 
         yield put({

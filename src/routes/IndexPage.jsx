@@ -9,7 +9,7 @@ import MySider from "../components/mySider"
 
 import "../components/list.css"
 
-function IndexPage() {
+function Indexpage() {
 
   const [ showDrawer, setShower ] = useState( false )
 
@@ -24,4 +24,4 @@ function IndexPage() {
   )
 }
 
-export default connect()(IndexPage);
+export default connect()(Indexpage);

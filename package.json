@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "roadhog server",
-    "build": "roadhog build",
+    "build": "roadhog build --analyze",
     "lint": "eslint --ext .js src test",
     "precommit": "npm run lint"
   },
@@ -13,6 +13,7 @@
     "history": "^4.10.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-loadable": "^5.5.0",
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "eslint-plugin-react": "^7.1.0",
     "husky": "^0.12.0",
     "redbox-react": "^1.4.3",
-    "roadhog": "^2.5.0-beta.4"
+    "roadhog": "^2.5.0-beta.4",
+    "webpack-bundle-analyzer": "^3.6.0"
   }
 }

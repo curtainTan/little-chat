@@ -92,7 +92,7 @@ function MyDrawer({
             data: {
                 selected: {
                     joined: arr.length === 1,
-                    index: arr.length === 2 ? arr[1] : arr[0],
+                    index: arr.length === 2 ? parseInt(arr[1]) : parseInt(arr[0]),
                     selectKey: data.key
                 }
             }

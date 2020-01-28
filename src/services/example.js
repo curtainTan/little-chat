@@ -108,6 +108,7 @@ export function listenData( initData, socket ){
     }
     // 群主删除房间的信息
     if( data.type === "delete-room" ){
+      console.log( "删除房间的信息：", data )
       let msg = {
         msg: {
           msg: "群主已经删群跑路了，15分钟后将删除此房间...",
