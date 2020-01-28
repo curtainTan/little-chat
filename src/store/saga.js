@@ -1,7 +1,7 @@
 import { fork } from "redux-saga/effects"
-import { watchAdd } from "./counter/saga"
+import { watchUserData } from "./userInfo/saga"
 
 export default function* rootSaga(){
-    yield fork( watchAdd )
+    yield fork( watchUserData )
 }
 

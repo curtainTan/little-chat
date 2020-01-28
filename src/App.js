@@ -1,16 +1,37 @@
 import React from 'react';
-import './App.css';
-import { Provider } from "react-redux"
-import store from "./store/index"
-import Home from "./pages/home"
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom"
+import { connect } from "react-redux"
+import Loadable from "react-loadable"
+import Loading from "./component/loading"
+import "./App.css"
 
+const Home = Loadable({
+  loader: () => import("./pages/home"),
+  loading: Loading
+})
 
-function App() {
+const LoginPage = Loadable({
+  loader: () => import("./pages/login"),
+  loading: Loading
+})
+
+function App({ isLogin }) {
   return (
-    <Provider store={ store } >
-      <Home />
-    </Provider>
+    <HashRouter>
+      <Switch>
+        <Route path="/" exact>
+          { isLogin ? <Home /> : <Redirect to="/login" /> }
+        </Route>
+        <Route path="/login" component={ LoginPage } />
+      </Switch>
+    </HashRouter>
   );
 }
 
-export default App;
+function mapState( state ){
+  return {
+    isLogin: state.userState.get( "name" )
+  }
+}
+
+export default connect( mapState )(App);
