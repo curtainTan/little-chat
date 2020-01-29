@@ -1,28 +1,7 @@
-var a = new Set()
+var s = [ 1, 2, 3, 4, 5 ]
 
-a.add({
-    name: "tan",
-    a: "00"
-})
+var ss = s.splice( 2, 1 )
 
-a.add({
-    name: "yu",
-    a: "44"
-})
+console.log( s )
+console.log( ss )
 
-a.add({
-    name: "ss",
-    a: "56600"
-})
-
-for( let item of a.keys() ){
-    console.log( item )
-}
-
-for( let item of a.values() ){
-    if( item.name === "tan" && item.a === "00" ){
-        a.delete( item )
-    }
-}
-
-console.log( a )

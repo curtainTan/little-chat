@@ -35,7 +35,6 @@ class store {
     constructor(){
         this.rooms = []
         this.users = []
-        this.timers = []
         this.rooms.push({
             name: "公共房间",
             id: "0"
@@ -58,15 +57,29 @@ class store {
     /**
      * 删除房间
      * @param { 删除房间的信息 } data 
-     * 房间id    房间拥有者name
+     * 房间id    房间拥有者name   返回删除房间信息
      */
 
     deleteRoom( data ){
         for( let i = 0; i < this.rooms.length; i ++ ){
             if( data.roomId === this.rooms[i].id ){
                 if( data.owner === this.rooms[i].owner ){
-                    var roomData = this.rooms.splice( i, 1 )
-                    return roomData[0]
+                    var roomData = this.rooms[i]
+                    return roomData
+                }
+            }
+        }
+    }
+
+    /**
+     * 删除房间的辅助函数
+     * @param {*} data    data是 房间信息的数组
+     */
+    deleteHandle( data ){
+        for( let i = 0; i < data.length; i ++ ){
+            for( let j = this.rooms.length - 1; j >= 0; j -- ){
+                if( this.rooms[j].id === data[i].id ){
+                    this.rooms.splice( j, 1 )
                 }
             }
         }
@@ -87,41 +100,19 @@ class store {
                 break
             }
         }
+        // 查找用户创建的房间
         var roomList = []
         for( let j = 0; j < this.rooms.length; j ++ ){
             if( this.rooms[j].owner === userData.name ){
                 roomList.push( this.rooms[j] )
             }
         }
-        // 15分钟后
-        // var timer = setTimeout( () => {
-        //     // 直接删除房间
-        //     for( let j = this.rooms.length - 1; j >= 0; j -- ){
-        //         if( this.rooms[j].owner === owner ){
-        //             this.rooms.splice( j, 1 )
-        //         }
-        //     }
-        // }, 1000 * 60 * 15 )
-        // timer.name = userData.name
-        // this.timers.push( timer )
         return {
             userData,
             roomList
         }
     }
-    /**
-     * 15分钟内重新连接
-     * @param {*} ip 
-     * 通知上线，删除定时器
-     */
-    reconn( name ){
-        for( let i = 0; i < this.timers.length; i ++ ){
-            if( this.timers[i].name === name ){
-                clearTimeout( this.timers[i] )
-                break
-            }
-        }
-    }
+
     /**
      * 添加用户
      * @param {用户信息} data 
@@ -129,9 +120,7 @@ class store {
      * 判断用户名是否重复，再添加
      */
     addUser( data ){
-        
         if( data.name === "" ) return false
-
         for( let i = 0; i < this.users.length; i ++ ){
             if( this.users[i].name === data.name ){
                 return false

@@ -29,8 +29,6 @@ function listenIO( IO, store ){
         socket.on( "send-msg", sendMsg( IO, socket, store ) )
         // 下线
         socket.on( "disconnect", disconnect( IO, socket, store ) )
-        // 重新连接
-        socket.on( "re-connect", reconnect( IO, socket, store ) )
         // 申请加入群聊
         socket.on( "apply-join", applyJoin( IO, socket, store ) )
         // 创建房间
@@ -131,8 +129,9 @@ function deleteRoom( IO, socket, store ){
                 type: "delete-room",
                 deleteRoom
             })
-            // 15分钟后删除房间
+            // 15分钟后删除房间  并通知用户
             setTimeout(() => {
+                store.deleteRoom([ deleteRoom ])
                 IO.emit( "update", {
                     type: "deleteRoom",
                     after: true,
@@ -157,54 +156,19 @@ function disconnect( IO, socket, store ){
                     type: "delete-room",
                     deleteRoom: userData.roomList[i]
                 })
-                // 15分钟后删除房间
+                // 15分钟后删除房间  并通知用户删除房间
                 setTimeout( () => {
+                    store.deleteRoom( userData.roomList )
                     IO.emit( "update", {
                         type: "deleteRoom",
                         deleteRoom: userData.roomList[i]
                     })
-                }, 1000 * 60 *15 )
+                }, 1000 * 60 * 15 )
             }
             // 通知所有用户，此用户下线
             IO.emit( "update", {
                 type: "disconnect",
                 userData
-            })
-        }
-    }
-}
-
-// 重新连接
-// 通知上线   删除定时器
-// 重新加入群聊
-// data   ----  name, joinedRoom
-
-function reconnect( IO, socket, store ){
-    return function( data ){
-        if( addUser ){
-            store.reconn( data.name )
-            socket.join( "0", () => {
-                socket.emit( "connect-suc", {
-                    userData: data,
-                    userList: store.users,
-                    roomList: store.rooms
-                })
-                for( let i = 0; i < data.rooms.length; i ++ ){
-                    for( let j = 0; j < store.rooms.length; j ++ ){
-                        if( data.rooms[i].id === store.rooms[j].id ){
-                            socket.join( store.rooms[j].id, () => {
-                                socket.emit( "re-join", {
-                                    roomId: store.rooms[j].id
-                                } )
-                            })
-                        }
-                    }
-                }
-            })
-        } else {
-            socket.emit( "msg-system", {
-                type: "err-login",
-                msg: "此用户名在15分钟内已经被其他人使用了，请重新输入用户名"
             })
         }
     }

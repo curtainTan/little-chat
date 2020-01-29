@@ -47,27 +47,7 @@ const IO = require("socket.io")( http, {
 
 var myStore = new store()
 
-myStore.rooms.push({ 
-    name: "我哦也是是",
-    id: "0777",
-    ip: "007770" 
-})
-
-myStore.rooms.push({ 
-  name: "我是私密房间",
-  id: "0776667",
-  ip: "00776670" 
-})
-
 listenIO( IO, myStore )
-
-// IO.on( "connect", function( sk ){
-//   console.log( sk.handshake.headers )
-//   console.log( sk.id )
-//   sk.le
-  
-// })
-
 
 http.listen( 7788, () => {
   console.log( "服务器启动----" )
