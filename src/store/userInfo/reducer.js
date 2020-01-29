@@ -6,8 +6,8 @@ const userInfo = Map({
     isLoading: false,
     name: "",
     header: "",
-    io: io("ws://127.0.0.1:7788")
-    // io: io("ws://132.232.45.108:7788")
+    // io: io("ws://127.0.0.1:7788")
+    io: io("ws://132.232.45.108:7788")
 })
 
 export default ( state = userInfo, action ) => {

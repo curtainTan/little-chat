@@ -41,9 +41,10 @@ function MyFooter( data ){
                 time = time.replace( /(.*)?\sGMT(.*)/, function( a, b ){
                     return b
                 })
-                console.log( "最后的结果：", reader )
                 data.user.io.emit( "send-msg", {
                     id: data.roomData.id,
+                    fromId: data.user.id,
+                    type: data.nowType,
                     msg: {
                         name: data.user.name,
                         header: data.user.header,
@@ -71,6 +72,8 @@ function MyFooter( data ){
                 setValue("")
                 data.user.io.emit( "send-msg", {
                     id: data.roomData.id,
+                    fromId: data.user.id,
+                    type: data.nowType,
                     msg: {
                         name: data.user.name,
                         header: data.user.header,
@@ -87,7 +90,7 @@ function MyFooter( data ){
         [inputValue],
     )
 
-    return data.joined !== "noJoin" ? 
+    return data.nowType !== "noJoin" ? 
                 (<Layout.Footer className="my-footer">
                     <div className="pick-img">
                         <Icon type="picture" onClick={ showPic } theme="filled" style={{ fontSize: '20px' }} />
@@ -110,7 +113,7 @@ function mapState( state ){
     if( selectedData.type !== "noJoin" ){
         return {
             user: state.userState.toObject(),
-            joined: selectedData.type,
+            nowType: selectedData.type,
             roomData: {
                 id: state.roomState.getIn([ selectedData.type, selectedData.index, "id" ])
             }
@@ -118,7 +121,7 @@ function mapState( state ){
     } else {
         return {
             user: state.me,
-            joined: selectedData.type
+            nowType: selectedData.type
         }
     }
 }

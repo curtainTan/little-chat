@@ -3,7 +3,7 @@ import * as req from "../../service/io"
 
 
 function* initialData( data ){
-    console.log( "初始化的数据：", data )
+    // console.log( "初始化的数据：", data )
     yield put({
         type: "setLoading",
         data: {

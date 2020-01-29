@@ -10,6 +10,7 @@ function MyDrawer({
     setShower, 
     myselected, 
     sele, 
+    userList,
     io, 
     name }){
 
@@ -71,7 +72,6 @@ function MyDrawer({
     // 上传前，控制上传文件的大小
     const beforeUpload = ( file ) => {
         if( file.size < 1024 * 1024 ){
-            console.log( "文件是小于1m的" )
             return true
         } else {
             message.warning({
@@ -157,6 +157,27 @@ function MyDrawer({
                         })
                     }
                 </Menu.SubMenu>
+                <Menu.SubMenu
+                    key="user"
+                    title={
+                        <span>
+                            <Icon type="user" />
+                            <span>当前在线用户</span>
+                        </span>
+                    }
+                >
+                    {
+                        userList.map((item, index) => {
+                            return (
+                                <Menu.Item key={ "user-" + index }>
+                                    {/* <Icon type="user" /> */}
+                                    <Avatar shape="square" src={ item.header || "https://518test.curtaintan.club/formimg/1578805038170.jpg" } />
+                                    <span>{ item.name }</span>
+                                </Menu.Item>
+                            )
+                        })
+                    }
+                </Menu.SubMenu>
                 <Menu.Item key="add-room" >
                     <Icon type="plus" />
                     <span>创建群聊</span>
@@ -189,6 +210,7 @@ function mapState( state ){
         joined: state.roomState.get("joined"),
         noJoin: state.roomState.get("noJoin"),
         myselected: state.roomState.get("selected"),
+        userList: state.roomState.get("user"),
         io: state.userState.get("io"),
         name: state.userState.get("name")
     }

@@ -88,7 +88,7 @@ function Loginpage({ dispatch, history, isLoading }){
 
 
 function mapState( state ){
-    console.log( state.userState.toObject() )
+    // console.log( state.userState.toObject() )
     return {
         isLoading: state.userState.get("isLoading")
     }

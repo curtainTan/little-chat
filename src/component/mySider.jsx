@@ -4,34 +4,30 @@ import { connect } from "react-redux"
 
 const { Sider } = Layout
 
-function MySider({ noJoin, joined, myselected, sele, io }){
+function MySider({ noJoin, joined, myselected, sele, io, userList }){
 
     const [ show, setShow ] = useState( false )
     const [ visible, setVisible ] = useState( false )
     const [ loading, setLoading ] = useState( false )
     const [ headImg, setHeader ] = useState( "https://518test.curtaintan.club/formimg/1578805038170.jpg" )
     const [ qunName, setName ] = useState("")
-    const selectHandle = useCallback(
-        ( data ) => {
-            console.log( data )
-            if( data.key === "add-room" ){
-                setVisible( true )
-                return
-            }
-            var arr = data.key.split("-")
-            sele({
-                type: "setSelected",
-                data: {
-                    selected: {
-                        type: arr[0],
-                        index: parseInt( arr[1] ),
-                        selectKey: data.key
-                    }
+    const selectHandle = ( data ) => {
+        if( data.key === "add-room" ){
+            setVisible( true )
+            return
+        }
+        var arr = data.key.split("-")
+        sele({
+            type: "setSelected",
+            data: {
+                selected: {
+                    type: arr[0],
+                    index: parseInt( arr[1] ),
+                    selectKey: data.key
                 }
-            })
-        },
-        [myselected],
-    )
+            }
+        })
+    }
 
     const uploadBtn = useMemo( () => {
         return (
@@ -42,9 +38,9 @@ function MySider({ noJoin, joined, myselected, sele, io }){
         )
     }, [ loading ] )
 
-    const onCancel = useCallback(() => {
+    const onCancel = () => {
         setVisible( false )
-    }, [visible] )
+    }
 
     // 创建房间
     const onOk = useCallback(() => {
@@ -86,7 +82,6 @@ function MySider({ noJoin, joined, myselected, sele, io }){
     // 上传前，控制上传文件的大小
     const beforeUpload = ( file ) => {
         if( file.size < 1024 * 1024 ){
-            console.log( "文件是小于1m的" )
             return true
         } else {
             message.warning({
@@ -118,7 +113,7 @@ function MySider({ noJoin, joined, myselected, sele, io }){
                     key="myjoin"
                     title={
                         <span>
-                            <Icon type="user" />
+                            <Icon type="team" />
                             <span>我加入的群聊</span>
                         </span>
                     }
@@ -158,6 +153,28 @@ function MySider({ noJoin, joined, myselected, sele, io }){
                         })
                     }
                 </Menu.SubMenu>
+                <Menu.SubMenu
+                    key="user"
+                    title={
+                        <span>
+                            <Icon type="user" />
+                            <span>当前在线用户</span>
+                        </span>
+                    }
+                >
+                    {
+                        userList.map((item, index) => {
+                            return (
+                                <Menu.Item key={ "user-" + index }>
+                                    <Badge count={ item.msgCount } offset={ [-1, 2] } >
+                                        <Avatar shape="square" src={ item.header || "https://518test.curtaintan.club/formimg/1578805038170.jpg" } />
+                                    </Badge>
+                                    <span>{ item.name }</span>
+                                </Menu.Item>
+                            )
+                        })
+                    }
+                </Menu.SubMenu>
                 <Menu.Item key="add-room" >
                     <Icon type="plus" />
                     <span>创建群聊</span>
@@ -189,6 +206,7 @@ function mapState( state ){
     return {
         joined: state.roomState.get("joined"),
         noJoin: state.roomState.get("noJoin"),
+        userList: state.roomState.get("user"),
         myselected: state.roomState.get("selected"),
         io: state.userState.get("io"),
     }

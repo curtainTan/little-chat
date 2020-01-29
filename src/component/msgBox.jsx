@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef } from "react"
+import React, { memo, useEffect, useRef } from "react"
 import { Layout, Button, Avatar, notification } from "antd"
 import { connect } from "react-redux"
 
@@ -39,14 +39,14 @@ const MsgSystem = memo( ({ data }) => {
 
 function MsgBox({ selected, roomData, userData, msg }){
 
-    console.log( "msg的信息：--",msg )
+    // console.log( "msg的信息：--",msg )
 
     const box = useRef()
     useEffect( ()=> {
         box.current.scrollTop = box.current.scrollHeight
     }, [ msg ] )
 
-    const addRoom = useCallback(() => {
+    const addRoom = () => {
         let newroomData = {
             name: roomData.name,
             owner: roomData.owner,
@@ -66,7 +66,7 @@ function MsgBox({ selected, roomData, userData, msg }){
             roomData: newroomData,
             userData: user
         })
-    }, [selected])
+    }
 
     return (
         <Layout.Content >
