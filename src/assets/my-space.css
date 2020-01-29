@@ -1,0 +1,18 @@
+.mySpace{
+    height: 100%;
+    padding: 30px;
+}
+
+.me-header{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.me-header img{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border: 1px solid rgb(53, 53, 53);
+    border-radius: 50%;
+}
+

@@ -1,14 +1,24 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import { Layout, Button, notification, Modal, Icon } from "antd"
 import { connect } from "react-redux"
+import Loadable from "react-loadable"
+import Loading from "./loading"
 
 import MyFooter from "./footer"
 import MsgBox from "./msgBox"
+
+const MeBox = Loadable({
+    loader: () => import("./me"),
+    loading: Loading
+})
 
 const { Header } = Layout
 
 function MyContent( { setShower, title, owner, userName, io, roomId } ){
     const [ vi, setVi ] = useState( false )
+    useEffect( () => {
+        MeBox.preload()
+    }, [] )
     const deleteHandle = () => {
         var time = new Date().toTimeString()
         time = time.replace( /(.*)?\sGMT(.*)/, function( a, b ){
@@ -41,8 +51,13 @@ function MyContent( { setShower, title, owner, userName, io, roomId } ){
                     <p>你确定要删除此房间吗？？</p>
                 </Modal>
             </Header>
-            <MsgBox />
-            <MyFooter />
+            {
+                io.id === roomId ? <MeBox /> :
+                <Fragment>
+                    <MsgBox />
+                    <MyFooter />
+                </Fragment>
+            }
         </Layout>
     )
 }
@@ -67,4 +82,3 @@ function mapState( state ){
 }
 
 export default connect( mapState )(MyContent)
-

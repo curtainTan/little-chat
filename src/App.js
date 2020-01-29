@@ -15,6 +15,11 @@ const LoginPage = Loadable({
   loading: Loading
 })
 
+const NotFound = Loadable({
+  loader: () => import("./pages/404"),
+  loading: Loading
+})
+
 function App({ isLogin }) {
   return (
     <HashRouter>
@@ -23,6 +28,7 @@ function App({ isLogin }) {
           { isLogin ? <Home /> : <Redirect to="/login" /> }
         </Route>
         <Route path="/login" component={ LoginPage } />
+        <Route component={ NotFound } />
       </Switch>
     </HashRouter>
   );
