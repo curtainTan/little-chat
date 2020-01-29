@@ -144,7 +144,7 @@ function deleteRoom( IO, socket, store ){
             })
             // 15分钟后删除房间  并通知用户
             setTimeout(() => {
-                store.deleteRoom([ deleteRoom ])
+                store.deleteHandle([ deleteRoom ])
                 IO.emit( "update", {
                     type: "deleteRoom",
                     after: true,
@@ -171,7 +171,7 @@ function disconnect( IO, socket, store ){
                 })
                 // 15分钟后删除房间  并通知用户删除房间
                 setTimeout( () => {
-                    store.deleteRoom( userData.roomList )
+                    store.deleteHandle( userData.roomList )
                     IO.emit( "update", {
                         type: "deleteRoom",
                         deleteRoom: userData.roomList[i]

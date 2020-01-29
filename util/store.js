@@ -83,6 +83,7 @@ class store {
                 }
             }
         }
+        console.log( "删除房间后是room长度：", this.rooms.length )
     }
 
     /**
