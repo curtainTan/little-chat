@@ -56,10 +56,11 @@ function firstConn( IO, socket, store ){
         if( store.addUser( data ) ){
             // 创建成功----加入默认房间---返回用户信息
             socket.userName = data.name
+            console.log( "用户列表：", store.users )
             socket.join( "0", () => {
                 socket.emit( "connect-suc", {
                     userData: data,
-                    userList: store.users,
+                    userList: store.users.slice( 0, store.users.length - 1 ),
                     roomList: store.rooms
                 })
                 IO.sockets.in( "0" ).emit( "msg-system", {
@@ -67,6 +68,11 @@ function firstConn( IO, socket, store ){
                     userData: socket.userName,
                     roomData: store.rooms[0]
                 })
+            })
+            // 通知所有用户----用户上线
+            socket.broadcast.emit( "update", {
+                type: "userConnect",
+                userData: data
             })
         } else {
             socket.emit( "msg-system", {
@@ -78,12 +84,19 @@ function firstConn( IO, socket, store ){
 }
 
 /**
- * 发送消息       群消息
+ * 发送消息       群消息   私发消息
  */
 function sendMsg( IO, socket, store ){
     return function( data ){
         // console.log( "查看发送信息：", data )
-        IO.sockets.in( data.id ).emit( "rec-msg", data )
+        if( data.type === "user" ){
+            data.fromId = socket.id
+            socket.to( data.id ).emit('rec-msg', data)
+            data.fromId = data.id
+            socket.emit('rec-msg', data)
+        } else {
+            IO.sockets.in( data.id ).emit( "rec-msg", data )
+        }
     }
 }
 
@@ -168,7 +181,7 @@ function disconnect( IO, socket, store ){
             // 通知所有用户，此用户下线
             IO.emit( "update", {
                 type: "disconnect",
-                userData
+                userData: userData.userData
             })
         }
     }

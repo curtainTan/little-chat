@@ -131,7 +131,5 @@ class store {
     }
 }
 
-
-
 module.exports = store
 
