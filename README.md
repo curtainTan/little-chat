@@ -2,9 +2,7 @@
 
 先看截图：
 
-![](https://s2.ax1x.com/2020/01/30/1lex6f.png)
-![](https://s2.ax1x.com/2020/01/30/1lev1P.png)
-![](https://s2.ax1x.com/2020/01/30/1lejpt.png)
+![](https://s2.ax1x.com/2020/01/31/13r2lR.jpg)
 
 体验地址：
 

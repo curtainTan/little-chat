@@ -11,7 +11,15 @@
     <!-- <script src="/socket.io/socket.io.js"></script> -->
     <script>
         console.log( io )
-        var socket = io( "ws://127.0.0.1:3000" )
+        var socket = io( "ws://127.0.0.1:7788" )
+        var socket1 = io( "ws://127.0.0.1:7788/chat" )
+
+        socket.on( "data", data => {
+            console.log( "我是index::", data )
+        } )
+        socket1.on( "data", data => {
+            console.log( "我是chat::", data )
+        } )
     </script>
 </body>
 </html>
