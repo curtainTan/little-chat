@@ -2,7 +2,7 @@
 
 先看截图：
 
-![](https://s2.ax1x.com/2020/01/31/13r2lR.jpg)
+<img src="https://s2.ax1x.com/2020/01/31/13r2lR.jpg" alt="加载失败--" />
 
 体验地址：
 
