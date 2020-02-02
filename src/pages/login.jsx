@@ -41,6 +41,7 @@ function Loginpage({ dispatch, history, isLoading }){
 
     const btnHandle = useCallback(() => {
         console.log( "name:", name )
+        console.log( "头像", header )
         dispatch({
             type: "initialData",
             payload: {

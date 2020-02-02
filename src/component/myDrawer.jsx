@@ -170,8 +170,9 @@ function MyDrawer({
                         userList.map((item, index) => {
                             return (
                                 <Menu.Item key={ "user-" + index }>
-                                    {/* <Icon type="user" /> */}
-                                    <Avatar shape="square" src={ item.header || "https://518test.curtaintan.club/formimg/1578805038170.jpg" } />
+                                    <Badge count={ item.msgCount } offset={ [-1, 2] } >
+                                        <Avatar shape="square" src={ item.header || "https://518test.curtaintan.club/formimg/1578805038170.jpg" } />
+                                    </Badge>
                                     <span>{ item.name }</span>
                                 </Menu.Item>
                             )

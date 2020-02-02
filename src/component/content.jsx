@@ -64,20 +64,12 @@ function MyContent( { setShower, title, owner, userName, io, roomId } ){
 
 function mapState( state ){
     var selected = state.roomState.get("selected")
-    if( selected.type !== "noJoin" ){
-        return {
-            title: state.roomState.getIn([ selected.type, selected.index, "name" ]),
-            owner: state.roomState.getIn([ selected.type, selected.index, "owner" ]),
-            userName: state.userState.get("name"),
-            io: state.userState.get("io"),
-            roomId: state.roomState.getIn([ selected.type, selected.index, "id" ])
-        }
-    } else {
-        return {
-            title: state.roomState.getIn([ selected.type, selected.index, "name" ]),
-            owner: state.roomState.getIn([ selected.type, selected.index, "owner" ]),
-            userName: state.userState.get("name"),
-        }
+    return {
+        title: state.roomState.getIn([ selected.type, selected.index, "name" ]),
+        owner: state.roomState.getIn([ selected.type, selected.index, "owner" ]),
+        userName: state.userState.get("name"),
+        io: state.userState.get("io"),
+        roomId: state.roomState.getIn([ selected.type, selected.index, "id" ])
     }
 }
 

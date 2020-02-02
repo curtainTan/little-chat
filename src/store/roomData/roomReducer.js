@@ -47,11 +47,15 @@ function joinRoom( state, action ){
         index: state.get( "joined" ).size
     }
     var addIndex = noJoinList.findIndex( ( val ) => val.id === action.roomData.id )
-    var newData = state.deleteIn( [ "noJoin", addIndex ] )
+    console.log( "添加房间:", addIndex ) 
+    if( addIndex !== -1 ){
+        console.log( "找到房间----" )
+        var newData = state.deleteIn( [ "noJoin", addIndex ] )
                        .mergeIn( ["joined"], action.roomData )
                        .set( "selected", sele )
-    // 后期再添加select的功能
-    return newData
+        return newData
+    }
+    return state
 }
 
 function deleteRoom( state, roomData ){
@@ -97,10 +101,10 @@ function reciveMsg( state, data ){
         }
     } else {
         // 来自用户的消息
-        var joineList = state.get("user")
-        var index = joineList.findIndex( val => val.id === data.fromId )
+        let joineList = state.get("user")
+        let index = joineList.findIndex( val => val.id === data.fromId )
         if( index !== -1 ){
-            var count = state.getIn([ "user", index, "msgCount" ]) || 0
+            let count = state.getIn([ "user", index, "msgCount" ]) || 0
             // 判断是否是当前选中房间
             if( state.getIn([ "selected", "type" ]) === "user" &&  
             state.getIn([ "selected", "index" ]) === index ){

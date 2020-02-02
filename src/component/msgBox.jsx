@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { Layout, Button, Avatar, notification } from "antd"
 import { connect } from "react-redux"
 
@@ -39,12 +39,12 @@ const MsgSystem = memo( ({ data }) => {
 
 function MsgBox({ selected, roomData, userData, msg }){
 
-    // console.log( "msg的信息：--",msg )
-
     const box = useRef()
     useEffect( ()=> {
         box.current.scrollTop = box.current.scrollHeight
     }, [ msg ] )
+
+    const [ showBtn, setShow ] = useState( false )
 
     const addRoom = () => {
         let newroomData = {
@@ -58,6 +58,7 @@ function MsgBox({ selected, roomData, userData, msg }){
             header: userData.header,
             id: userData.io.id
         }
+        setShow( true )
         notification.open({
             message: "已经发出申请，请等待..."
         })
@@ -66,6 +67,9 @@ function MsgBox({ selected, roomData, userData, msg }){
             roomData: newroomData,
             userData: user
         })
+        setTimeout( () => {
+            setShow( false )
+        }, 2000 )
     }
 
     return (
@@ -85,7 +89,7 @@ function MsgBox({ selected, roomData, userData, msg }){
                         <div style={{ textAlign: "center", marker: 30 }} >暂时还没有消息</div>
                     )
                 ) : (
-                    <div className="no-joined-box">你还没有加入群聊...<Button type="primary" onClick={ addRoom } >申请加入群聊</Button></div>
+                    <div className="no-joined-box">你还没有加入群聊...<Button type="primary" onClick={ addRoom } disabled={ showBtn } >申请加入群聊</Button></div>
                 )
             }
             </div>

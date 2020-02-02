@@ -230,6 +230,9 @@ pre{
     .drawer-btn{
         display: block;
     }
+    .msg-right{
+        max-width: 80%;
+    }
 }
 
 
