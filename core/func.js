@@ -1,47 +1,4 @@
 
-// 在每个socket对象上绑定一个userName
-// 用于下线删除房间
-
-/**
- * 
- *     功能一览
- * 
- * 连接成功  ------- 设置用户名
- *                  加入默认房间
- *        返回----- 在线用户列表、房间列表、个人用户信息
- *        广播用户上线信息
- * 
- * 发送消息   ------- 系统消息/群聊消息
- * 
- * 申请加入群聊
- * 
- * 重新连接
- *                  
- */
-
-function listenIO( IO, store ){
-    IO.on( "connection", function( socket ){
-        
-
-        // 第一次登陆
-        socket.on( "firstConn", firstConn( IO, socket, store ) )
-        // 发送消息
-        socket.on( "send-msg", sendMsg( IO, socket, store ) )
-        // 下线
-        socket.on( "disconnect", disconnect( IO, socket, store ) )
-        // 申请加入群聊
-        socket.on( "apply-join", applyJoin( IO, socket, store ) )
-        // 创建房间
-        socket.on( "create-room", createRoom( IO, socket, store ) )
-        // 申请加入房间
-        socket.on( "apply", applyJoin( IO, socket, store ) )
-        // 删除房间
-        socket.on( "delete-room", deleteRoom( IO, socket, store ) )
-
-    })
-}
-
-
 /**
  * 第一次连接
  * @param {socket} socket 
@@ -244,4 +201,12 @@ function applyJoin( IO, socket, store ){
     }
 }
 
-module.exports = listenIO
+
+module.exports = {
+    firstConn,
+    sendMsg,
+    createRoom,
+    deleteRoom,
+    disconnect,
+    applyJoin
+}

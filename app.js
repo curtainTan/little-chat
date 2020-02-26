@@ -38,8 +38,8 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 
-const store = require("./util/store")
-const listenIO = require("./util/io")
+const store = require("./core/store")
+const listenIO = require("./core/io")
 const IO = require("socket.io")( http, {
   pingTimeout: 1000 * 10,
   pingInterval: 1000 * 2.5
